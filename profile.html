@@ -1,0 +1,136 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque&family=Comic+Neue:wght@700&f
+amily=Inclusive+Sans&family=Satisfy&display=swap" rel="stylesheet">
+	<title>Student Profile page</title>
+	<style>
+		body {
+			margin: 0px;
+			font-family: 'Bricolage Grotesque', sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+	<button type="submit" onclick="returnHome()" class="btn btn-primary btn-block mb-4"
+		style="margin-left : 40em;margin-top : 30px">Go Home</button>
+
+	<section class="vh-100" style="margin-top : -200px">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col col-md-9 col-lg-7 col-xl-5">
+					<div class="card" style="border-radius: 15px;">
+						<div class="card-body p-4">
+							<div class="d-flex text-black">
+								<div class="flex-shrink-0">
+									<img src="https://cdn.dribbble.com/userupload/2800620/file/original-10b9ead2b3f6c05fa0f1b2197d872bbd.jpg?resize=320x240&vertical=center"
+										alt="Generic placeholder image" class="img-fluid"
+										style="width: 180px; border-radius: 10px;">
+								</div>
+								<div class="flex-grow-1 ms-3">
+									<h4>Welcome</h4>
+									<h5 class="mb-1" id="username"></h5>
+									<span>Joined on : </span>
+									<b><span class="mb-1" id="dateOfBirth"></span></b>
+									<br>
+									<span>Your Major : </span>
+									<b><span class="mb-2 pb-1" style="color: #2b2a2a;" id="major"></span></b>
+								</div>
+							</div>
+							<div style="display: flex;">
+								<button type="submit" id="clickMeButton" class="btn btn-secondary btn-block mb-4"
+									style="margin-left : 10%">View Results</button>
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" id="dropdownButton" disabled
+										type="button" data-bs-toggle="dropdown" aria-expanded="false"
+										style="margin-left : 26%">Select Category </button>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" onclick="callCat1Marks()">CAT-1</a></li>
+										<li><a class="dropdown-item" onclick="callCat2Marks()">CAT-2</a></li>
+										<li><a class="dropdown-item" onclick="callFatMarks()">FAT</a></li>
+										<li><a class="dropdown-item" onclick="callTotalMarks()">Get total Result</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<p id="marks"></p>
+							<p id="grade"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script>
+	window.history.forward();
+
+	function returnHome() {
+		location.href = "/index.html";
+	}
+	var username = localStorage.getItem("username")
+	var dateOfBirth = localStorage.getItem("dob")
+	var major = localStorage.getItem("major")
+	var text = document.getElementById('marks')
+	var Grade = document.getElementById('grade')
+	document.getElementById('username').textContent = username.toUpperCase();
+	document.getElementById('dateOfBirth').textContent = dateOfBirth;
+	document.getElementById('major').textContent = major.toUpperCase();
+	var clickMeButton = document.getElementById("clickMeButton");
+	var dropdownButton = document.getElementById("dropdownButton");
+	clickMeButton.addEventListener("click", function () {
+		dropdownButton.removeAttribute("disabled");
+	});
+	clickMeButton.addEventListener("dblclick", function () {
+		location.reload();
+		dropdownButton.removeAttribute("disabled");
+	});
+
+	var marks1 = Math.round(Math.random() * 50)
+	var marks2 = Math.round(Math.random() * 50)
+	var marks3 = Math.round(Math.random() * 60)
+	var total = marks1 + marks2 + marks3
+	var percentage = ((total) / 160) * 100
+	function callCat1Marks() {
+		text.innerHTML = `Marks Obtained in CAT-1 are : ${marks1}`
+	}
+	function callCat2Marks() {
+		text.innerHTML = `Marks Obtained in CAT-2 are : ${marks2}`
+	}
+	function callFatMarks() {
+		text.innerHTML = `Marks Obtained in FAT are : ${marks3}`
+	}
+	var grade = ""
+	function calGrade() {
+		if (percentage > 90) 
+			grade = "S"
+		else if (percentage > 80 && percentage < 90) 
+			grade =  'A'
+		else if (percentage > 70 && percentage < 80) 
+			grade =  'B'
+		else if (percentage > 60 && percentage < 70) 
+			grade =  'C'
+		else if (percentage > 50 && percentage < 60)
+			 grade =  'D'
+		else 
+			 grade =  'E'
+		return grade;
+	}
+	function callTotalMarks() {
+		text.innerHTML =  `Overall Marks Obtained are ${total} with a percentage of ${Math.round(percentage)}`
+		Grade.innerHTML = `You have a probability of getting ${calGrade()} Grade`
+	}
+</script>
+
+</html>
